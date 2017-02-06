@@ -8,22 +8,31 @@
 
 #import "ViewController.h"
 
+#import "UIViewController+Behaviors.h"
+#import "HideNavigationBarBehavior.h"
+
+
 @interface ViewController ()
 
 @end
+
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    if (self.navigationController.viewControllers.count % 2 == 0) {
+        HideNavigationBarBehavior *behavior = [HideNavigationBarBehavior new];
+        [self addBehaviors:@[behavior]];
+    }
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)didTaped:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"viewController"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 @end
